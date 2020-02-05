@@ -1,14 +1,14 @@
-
-import * as React from 'react'
-import ActivityIndicator from './ActivityIndicator'
+import * as React from 'react';
 // eslint-disable-next-line no-unused-vars
-import { LoadingComponentProps } from 'react-loadable'
+import { LoadingComponentProps } from 'react-loadable';
+import ActivityIndicator from './ActivityIndicator';
 
-function Loading(props: LoadingComponentProps) {
-  if (props.error) {
-    return <div>Error!</div>
-  }
-  return <ActivityIndicator />
-}
+const Loading = (props: LoadingComponentProps) => {
+    const { error } = props;
+    if (error) {
+        return <div>Error!</div>;
+    }
+    return <ActivityIndicator />;
+};
 
-export default Loading
+export default Loading;

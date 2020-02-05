@@ -1,19 +1,19 @@
 import { observable, action } from 'mobx';
 
 export default class CounterStore {
-  root: any;
+    root: object;
 
-  constructor(root: any) {
-    this.root = root;
-  }
+    constructor(root: object) {
+        this.root = root;
+    }
 
-  @observable number = 0;
-  
-  @action increase = () => {
-    this.number++;
-  }
+    @observable number = 0;
 
-  @action decrease = () => {
-    this.number--;
-  }
+    @action increase = (): void => {
+        this.number++;
+    };
+
+    @action decrease = (): void => {
+        this.number--;
+    };
 }

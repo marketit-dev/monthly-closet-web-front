@@ -1,7 +1,8 @@
 import CounterStore from './counter';
 
 class RootStore {
-    counter: any;
+    counter: object;
+
     constructor() {
         this.counter = new CounterStore(this);
     }
