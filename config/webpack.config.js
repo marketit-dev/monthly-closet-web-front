@@ -329,6 +329,7 @@ module.exports = function(webpackEnv) {
                                 eslintPath: require.resolve('eslint'),
                                 resolvePluginsRelativeTo: __dirname,
                                 fix: true,
+                                ignore: true,
                             },
                             loader: require.resolve('eslint-loader'),
                         },

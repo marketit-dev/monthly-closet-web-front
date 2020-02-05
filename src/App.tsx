@@ -4,6 +4,7 @@ import * as Loadable from 'react-loadable';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Loading from './components/Loading';
 import NotFound from './components/NotFound';
+import OfficeCategoryView from './pages/OfficeCategoryView';
 
 const Counter = Loadable({
     loader: () => import('./components/Counter'),
@@ -17,6 +18,7 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route path="/counter" component={Counter} />
+                        <Route path="/categories" component={OfficeCategoryView} />
                         <Route component={NotFound} />
                     </Switch>
                 </Router>

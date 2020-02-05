@@ -8,6 +8,7 @@ import Store from './stores';
 
 const root = new Store();
 ReactDOM.render(
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <Provider {...root}>
         {/* Provider 에 props 로 넣어줍니다. */}
         <App />
