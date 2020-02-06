@@ -1,23 +1,23 @@
 import React from 'react';
-import { goHistory } from '../utils/base_utils';
+import { observer } from 'mobx-react';
+import { Container, Row, Col } from 'react-bootstrap';
 import OfficeCategoryButton from './OfficeCategoryButton';
+import { Tcategory } from '../stores/officeCategory';
 // import './OfficeCategory.css';
 
-type item = {
-    name: string;
-    url: string;
-};
 type OfficeCategoryProps = {
-    items: Array<item>;
+    categories: Tcategory[];
 };
 
-const OfficeCategoryList = ({ items }: OfficeCategoryProps) => (
-    <div className="OfficeCategoryList">
-        <ul>
-            {items.map((item: { name: string; url: string }) => (
-                <OfficeCategoryButton item={item} go={goHistory} key={item.name} />
+const OfficeCategoryList = ({ categories }: OfficeCategoryProps) => (
+    <Container className="OfficeCategoryList">
+        <Row className="justify-content-center">
+            {categories.map((item: Tcategory) => (
+                <Col md="auto" sm="auto" key={item.name}>
+                    <OfficeCategoryButton item={item} key={item.name} />
+                </Col>
             ))}
-        </ul>
-    </div>
+        </Row>
+    </Container>
 );
-export default OfficeCategoryList;
+export default observer(OfficeCategoryList);

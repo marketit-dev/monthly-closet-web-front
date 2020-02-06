@@ -1,18 +1,28 @@
 import React from 'react';
-// import './OfficeCategory.css';
+import '../styles/OfficeCategory.scss';
+import { observer } from 'mobx-react';
+import { useHistory } from 'react-router-dom';
+import { Tcategory } from '../stores/officeCategory';
 
-type item = {
-    name: string;
-    url: string;
-};
 type OfficeCategoryProps = {
-    item: item;
-    go: (arg0: string) => void;
+    item: Tcategory;
 };
-const OfficeCategoryButton = ({ item, go }: OfficeCategoryProps) => (
-    <div className="OfficeCategoryButton" onClick={() => go(item.url)} onKeyDown={() => go(item.url)} role="button">
-        <h4>{item.name}</h4>
-    </div>
-);
 
-export default OfficeCategoryButton;
+const OfficeCategoryButton = ({ item }: OfficeCategoryProps) => {
+    const history = useHistory();
+    function goHistory(path: string) {
+        history.push(path);
+    }
+    return (
+        <button
+            className="OfficeCategoryButton"
+            onClick={() => goHistory(item.path)}
+            onKeyDown={() => goHistory(item.path)}
+            type="button"
+        >
+            <h4>{item.name}</h4>
+        </button>
+    );
+};
+
+export default observer(OfficeCategoryButton);

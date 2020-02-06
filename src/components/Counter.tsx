@@ -7,19 +7,22 @@ type ICounterStore = {
     decrease: () => void;
 };
 
-@inject('counter')
+@inject(({ counter }) => ({
+    number: counter.number,
+    increase: counter.increase,
+    decrease: counter.decrease,
+}))
 @observer
-class Counter extends Component<{ counter: ICounterStore }, {}> {
+class Counter extends Component<{ number: number; increase: () => void; decrease: () => void }, {}> {
     render() {
-        const { counter } = this.props;
-
+        const { number, increase, decrease } = this.props;
         return (
             <div>
-                <h1>{counter.number}</h1>
-                <button type="button" onClick={counter.increase}>
+                <h1>{number}</h1>
+                <button type="button" onClick={increase}>
                     +1
                 </button>
-                <button type="button" onClick={counter.decrease}>
+                <button type="button" onClick={decrease}>
                     -1
                 </button>
             </div>

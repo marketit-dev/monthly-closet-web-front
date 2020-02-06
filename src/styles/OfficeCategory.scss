@@ -1,0 +1,19 @@
+.OfficeCategoryButton {
+    background-color: darkslategray;
+    color: white;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.OfficeCategoryView {
+    background-color: gray;
+    width: 100vw;
+    height: 100vh;
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;
+    }
+}

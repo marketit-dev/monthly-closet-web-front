@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import OfficeCategoryView from './pages/OfficeCategoryView';
+import CustomersView from './pages/customer/CustomersView';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Counter = Loadable({
     loader: () => import('./components/Counter'),
@@ -17,8 +20,9 @@ class App extends Component {
             <div>
                 <Router>
                     <Switch>
-                        <Route path="/counter" component={Counter} />
+                        <Route path="/customers" component={CustomersView} />
                         <Route path="/categories" component={OfficeCategoryView} />
+                        <Route path="/counter" component={Counter} />
                         <Route component={NotFound} />
                     </Switch>
                 </Router>

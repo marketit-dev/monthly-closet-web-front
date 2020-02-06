@@ -1,14 +1,18 @@
 import CounterStore from './counter';
 import OfficeCategoryStore from './officeCategory';
+import CustomerStore from './customer';
 
 class RootStore {
     counter: object;
 
-    officeCategory: object;
+    officeCategoryStore: object;
+
+    customerStore: object;
 
     constructor() {
+        this.customerStore = new CustomerStore(this);
         this.counter = new CounterStore(this);
-        this.officeCategory = new OfficeCategoryStore(this);
+        this.officeCategoryStore = new OfficeCategoryStore(this);
     }
 }
 

@@ -1,5 +1,10 @@
 import { observable } from 'mobx';
 
+export type Tcategory = {
+    name: string;
+    path: string;
+};
+
 export default class OfficeCategoryStore {
     root: object;
 
@@ -7,9 +12,9 @@ export default class OfficeCategoryStore {
         this.root = root;
     }
 
-    @observable category = [
-        { name: '드라마 영화 명대사', path: '/drama' },
-        { name: '속담 퀴즈', path: '/quiz' },
-        { name: '유의어 학습', path: '/synonym' },
-    ];
+    categories: Tcategory[] = observable([
+        { name: '구매 관리', path: '/purchase' },
+        { name: '고객 관리', path: '/customers' },
+        { name: '의류 관리', path: '/products' },
+    ]);
 }
