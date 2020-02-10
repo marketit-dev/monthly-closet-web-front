@@ -4,13 +4,33 @@ import { InputGroup, FormControl, DropdownButton, Dropdown } from 'react-bootstr
 
 type SearchProps = {
     title: string;
-    onSearch: (arg0: string) => void;
+    onSearch: (arg0: string, arg1: string) => void;
     selectors: Array<string>;
 };
 
 const Search = ({ title, onSearch, selectors }: SearchProps) => {
-    const [input, setInput] = useState(0);
+    const [searchForm, setSearchForm] = useState<string>('');
+
     let active = selectors[0];
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setSearchForm(value);
+    };
+
+    const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        onSearch(searchForm, active);
+        setSearchForm(''); // 초기화
+    };
+
+    const handleKeyPressSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            onSearch(searchForm, active);
+            setSearchForm(''); // 초기화
+        }
+    };
+
     function onClickSelector(select: string) {
         active = select;
     }
@@ -26,21 +46,16 @@ const Search = ({ title, onSearch, selectors }: SearchProps) => {
                 id="input-group-dropdown-1"
             >
                 {selectors.map((select: string) => (
-                    <Dropdown.Item key={select} onClick={onClickSelector(select)}>
+                    <Dropdown.Item key={select} onClick={() => onClickSelector(select)}>
                         {select}
                     </Dropdown.Item>
                 ))}
             </DropdownButton>
             <FormControl
                 aria-describedby="basic-addon1"
-                inputRef={ref => {
-                    setInput(ref);
-                }}
-                onKeyPress={event => {
-                    if (event.key === 'Enter') {
-                        onSearch();
-                    }
-                }}
+                onChange={onChange}
+                onKeyPress={handleKeyPressSubmit}
+                onSubmit={handleSubmit}
             />
         </InputGroup>
     );

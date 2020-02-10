@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { Container, Row } from 'react-bootstrap';
 import CustomerList from '../../components/CustomerList';
 import Pagination from '../../components/Pagination';
+import Search from '../../components/SearchWithSelect';
 import { Tcustomer, TreloadCustomer } from '../../stores/customer';
 
 @inject(({ customerStore }) => ({
@@ -18,7 +19,6 @@ class OfficeCategoryView extends Component<
 > {
     render() {
         const { customers, totalCustomerNum, reloadCustomer, divider } = this.props;
-        console.log(this.props);
         return (
             <div className="CustomersView">
                 <Container>
@@ -26,6 +26,9 @@ class OfficeCategoryView extends Component<
                         <div>
                             <h1>유저 리스트</h1>
                         </div>
+                    </Row>
+                    <Row>
+                        <Search title="유저 검색" />
                     </Row>
                     <Row />
                     <Row>
