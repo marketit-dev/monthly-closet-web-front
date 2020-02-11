@@ -4,21 +4,30 @@ import { Container, Row } from 'react-bootstrap';
 import CustomerList from '../../components/CustomerList';
 import Pagination from '../../components/Pagination';
 import Search from '../../components/SearchWithSelect';
-import { Tcustomer, TreloadCustomer } from '../../stores/customer';
+import { TCustomer, TReloadCustomer, TSearchCustomer } from '../../stores/customer';
 
 @inject(({ customerStore }) => ({
     customers: customerStore.customers,
     totalCustomerNum: customerStore.totalCustomerNum,
     reloadCustomer: customerStore.reloadCustomer,
     divider: customerStore.divider,
+    searchCustomer: customerStore.searchCustomer,
 }))
 @observer
 class OfficeCategoryView extends Component<
-    { customers: Tcustomer[]; totalCustomerNum: number; reloadCustomer: TreloadCustomer; divider: number },
+    {
+        customers: TCustomer[];
+        totalCustomerNum: number;
+        reloadCustomer: TReloadCustomer;
+        searchCustomer: TSearchCustomer;
+        limit: number;
+        page: number;
+        selectors: string[];
+    },
     {}
 > {
     render() {
-        const { customers, totalCustomerNum, reloadCustomer, divider } = this.props;
+        const { customers, totalCustomerNum, reloadCustomer, limit, selectors, page } = this.props;
         return (
             <div className="CustomersView">
                 <Container>
@@ -28,14 +37,14 @@ class OfficeCategoryView extends Component<
                         </div>
                     </Row>
                     <Row>
-                        <Search title="유저 검색" />
+                        <Search title="유저 검색" onSearch={searchCustomer} selectors={selectors} />
                     </Row>
                     <Row />
                     <Row>
                         <CustomerList customers={customers} />
                     </Row>
                     <Row className="justify-content-center">
-                        <Pagination totalNum={totalCustomerNum} divider={divider} onActive={reloadCustomer} />
+                        <Pagination totalNum={totalCustomerNum} limit={limit} page={page} onActive={reloadCustomer} />
                     </Row>
                 </Container>
             </div>
