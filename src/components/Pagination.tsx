@@ -8,12 +8,12 @@ type PaginationProps = {
     limit?: number;
 };
 
-const Paginations = ({ totalNum, onActive, page, limit = 10 }: PaginationProps) => {
+const Paginations = ({ totalNum, onActive, limit = 10 }: PaginationProps) => {
     let active = 1;
     const items = [];
 
     function onClickPage(number: number) {
-        onActive({ page: number });
+        onActive(number - 1);
         active = number;
     }
 

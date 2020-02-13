@@ -1,7 +1,9 @@
 import axios from 'axios';
 import qs, { ParsedUrlQueryInput } from 'querystring';
+import { REST_API_LOCAL_URL } from '../config/constants';
+
 export default function request(url: string, method = 'get', query?: ParsedUrlQueryInput, data?: any, config?: any) {
-    url = url + '?' + qs.stringify(query);
+    url = `${REST_API_LOCAL_URL + url}?${qs.stringify(query)}`;
     return axios({
         method,
         url,

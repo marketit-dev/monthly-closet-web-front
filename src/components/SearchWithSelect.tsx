@@ -1,38 +1,42 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { InputGroup, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
+import { ParsedUrlQueryInput } from 'querystring';
 
 type SearchProps = {
     title: string;
-    onSearch: (arg0: string, arg1: string) => void;
-    selectors: Array<string>;
+    onSearch: (arg0: ParsedUrlQueryInput) => void;
+    searchTypes: Array<string>;
+    searchTypeKeys: Array<string>;
 };
 
-const Search = ({ title, onSearch, selectors }: SearchProps) => {
+const Search = ({ title, onSearch, searchTypes, searchTypeKeys }: SearchProps) => {
     const [searchForm, setSearchForm] = useState<string>('');
-
-    let active = selectors[0];
+    const [active, setActive] = useState<number>(0);
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
+        console.log(value);
         setSearchForm(value);
+        console.log(searchForm);
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
         event.preventDefault();
-        onSearch(searchForm, active);
+        onSearch({ [searchTypeKeys[active]]: searchForm });
         setSearchForm(''); // 초기화
     };
 
     const handleKeyPressSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        console.log('event', event.keyCode);
         if (event.keyCode === 13) {
             event.preventDefault();
-            onSearch(searchForm, active);
+            onSearch({ [searchTypeKeys[active]]: searchForm });
             setSearchForm(''); // 초기화
         }
     };
 
-    function onClickSelector(select: string) {
-        active = select;
+    function onClickSelector(index: number) {
+        setActive(index);
     }
     return (
         <InputGroup className="mb-3">
@@ -42,19 +46,19 @@ const Search = ({ title, onSearch, selectors }: SearchProps) => {
             <DropdownButton
                 as={InputGroup.Prepend}
                 variant="outline-secondary"
-                title={active}
+                title={searchTypes[active]}
                 id="input-group-dropdown-1"
             >
-                {selectors.map((select: string) => (
-                    <Dropdown.Item key={select} onClick={() => onClickSelector(select)}>
-                        {select}
+                {Object.keys(searchTypes).map((select: string, index: number) => (
+                    <Dropdown.Item key={select} onClick={() => onClickSelector(index)}>
+                        {searchTypes[index]}
                     </Dropdown.Item>
                 ))}
             </DropdownButton>
             <FormControl
                 aria-describedby="basic-addon1"
                 onChange={onChange}
-                onKeyPress={handleKeyPressSubmit}
+                onKeyUp={handleKeyPressSubmit}
                 onSubmit={handleSubmit}
             />
         </InputGroup>

@@ -21,7 +21,8 @@
         "jsx-a11y/interactive-supports-focus": 0,
         "react/jsx-indent": 0,
         "react/jsx-indent-props": 0,
-        "no-plusplus": 0
+        "no-plusplus": 0,
+        "no-param-reassign": 0
     },
     "settings": {
         "react": {

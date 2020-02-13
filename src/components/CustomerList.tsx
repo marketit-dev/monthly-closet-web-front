@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Table } from 'react-bootstrap';
-import { Tcustomer } from '../stores/customer';
+import { TCustomer } from '../stores/customer';
 
 type CustomerListProps = {
-    customers: Tcustomer[];
+    customers: TCustomer[];
 };
 
 const CustomerList = ({ customers }: CustomerListProps) => (
@@ -18,7 +18,7 @@ const CustomerList = ({ customers }: CustomerListProps) => (
             </tr>
         </thead>
         <tbody>
-            {customers.map((customer: Tcustomer, index: number) => (
+            {customers.map((customer: TCustomer, index: number) => (
                 <tr key={customer.name}>
                     <td>{index}</td>
                     <td>{customer.name}</td>
