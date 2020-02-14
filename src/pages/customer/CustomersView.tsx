@@ -6,6 +6,16 @@ import Pagination from '../../components/Pagination';
 import Search from '../../components/SearchWithSelect';
 import { TCustomer, TReloadCustomer, TSearchCustomer } from '../../stores/customer';
 
+type CustomViewProps = {
+    customers: TCustomer[];
+    totalCustomerNum: number;
+    reloadCustomer: TReloadCustomer;
+    searchCustomer: TSearchCustomer;
+    limit: number;
+    searchTypes: string[];
+    searchTypeKeys: string[];
+};
+
 @inject(({ customerStore }) => ({
     customers: customerStore.customers,
     totalCustomerNum: customerStore.totalCustomerNum,
@@ -13,21 +23,10 @@ import { TCustomer, TReloadCustomer, TSearchCustomer } from '../../stores/custom
     divider: customerStore.divider,
     searchCustomer: customerStore.searchCustomer,
     searchTypes: customerStore.searchTypes,
-    searchTypeKeys: customerStore.searchTypeKeys,
+    searchTypeKeys: customerStore.searchTypes,
 }))
 @observer
-class OfficeCategoryView extends Component<
-    {
-        customers: TCustomer[];
-        totalCustomerNum: number;
-        reloadCustomer: TReloadCustomer;
-        searchCustomer: TSearchCustomer;
-        limit: number;
-        searchTypes: string[];
-        searchTypeKeys: string[];
-    },
-    {}
-> {
+class CustomersView extends Component<CustomViewProps, {}> {
     render() {
         const {
             customers,
@@ -67,4 +66,4 @@ class OfficeCategoryView extends Component<
     }
 }
 
-export default OfficeCategoryView;
+export default CustomersView;

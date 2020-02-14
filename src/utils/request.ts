@@ -14,7 +14,7 @@ export default function request(url: string, method = 'get', query?: ParsedUrlQu
             if (response.status !== 200) {
                 throw response;
             }
-            return response;
+            return response.data;
         })
         .catch(error => {
             if (error.response) {

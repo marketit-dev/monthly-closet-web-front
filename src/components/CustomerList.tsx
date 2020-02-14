@@ -19,7 +19,7 @@ const CustomerList = ({ customers }: CustomerListProps) => (
         </thead>
         <tbody>
             {customers.map((customer: TCustomer, index: number) => (
-                <tr key={customer.name}>
+                <tr key={customer.id}>
                     <td>{index}</td>
                     <td>{customer.name}</td>
                     <td>{customer.phoneNumber}</td>

@@ -3,10 +3,10 @@ import { ParsedUrlQueryInput } from 'querystring';
 import request from '../utils/request';
 
 export type TCustomer = {
+    id: string;
     name: string;
     phoneNumber: string;
     age?: number;
-    id?: string;
     cafe24Id?: string;
     sex?: boolean;
     location?: string;
@@ -34,9 +34,9 @@ export default class CustomerStore {
 
     @observable searchTypeKeys = ['name', 'age', 'phoneNumber', 'cafe24Id'];
 
-    customers: TCustomer[] = observable([
-        { name: '승일', phoneNumber: '01096970444' },
-        { name: '태헌', phoneNumber: '01011111111' },
+    @observable customers: TCustomer[] = observable([
+        { id: '1', name: '승일', phoneNumber: '01096970444' },
+        { id: '2', name: '태헌', phoneNumber: '01011111111' },
     ]);
 
     @action
@@ -49,7 +49,6 @@ export default class CustomerStore {
         this.query.offset = page * this.limit;
         request('customers', 'get', this.query)
             .then(res => {
-                console.log(res);
                 this.customers = res.data;
             })
             .catch(e => console.log(e));
@@ -58,10 +57,9 @@ export default class CustomerStore {
     searchCustomer = (searchQuery: ParsedUrlQueryInput) => {
         this.query = searchQuery;
         this.query.offset = 0;
-
+        this.query.limit = this.limit;
         request('customers', 'get', this.query)
             .then(res => {
-                console.log(res);
                 this.customers = res.data;
             })
             .catch(e => console.log(e));
