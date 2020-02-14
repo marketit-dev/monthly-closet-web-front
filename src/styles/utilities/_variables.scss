@@ -1,0 +1,48 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+
+
+
+
+/// Regular font family
+/// @type List
+$text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+
+/// Code (monospace) font family
+/// @type List
+$code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
+
+$font-primary: 'Roboto', sans-serif; 
+
+$font-secondary: Arial, Helvetica, sans-serif;
+
+$font-title: 20px;
+$font-subtitle: 17px;
+$font-middle: 14px;
+$font-small: 10px;
+$font-tiny: 7px;
+
+
+/// Copy text color
+/// @type Color
+$text-color: rgb(34, 34, 34) !default;
+
+/// Main brand color
+/// @type Color
+$brand-color: rgb(229, 0, 80) !default;
+
+/// Light grey
+/// @type Color
+$light-grey: rgb(215,216,217) !default;
+
+/// Medium grey
+/// @type Color
+$mid-grey: rgba(81, 89, 87, 0.5) !default;
+
+/// Dark grey
+/// @type Color
+$dark-grey: rgb(53, 54, 68) !default;
+
+$header-height: 60px;

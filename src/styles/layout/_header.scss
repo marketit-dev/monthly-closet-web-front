@@ -1,0 +1,15 @@
+.header {
+    height: $header-height;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid $mid-grey;
+    padding: 5px 20px;
+    >div {
+        height: 100%;
+    }
+    i {
+        height: 20px;
+        width: 20px;
+        color: $dark-grey;
+        cursor: pointer;
+    }
+}

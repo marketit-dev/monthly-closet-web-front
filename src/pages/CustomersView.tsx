@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { Container, Row } from 'react-bootstrap';
-import CustomerList from '../../components/CustomerList';
-import Pagination from '../../components/Pagination';
-import Search from '../../components/SearchWithSelect';
-import { TCustomer, TReloadCustomer, TSearchCustomer } from '../../stores/customer';
+import CustomerList from '../components/CustomerList';
+import Pagination from '../components/Pagination';
+import Search from '../components/SearchWithSelect';
+import { TCustomer, TReloadCustomer, TSearchCustomer } from '../stores/customer';
 
 type CustomViewProps = {
     customers: TCustomer[];

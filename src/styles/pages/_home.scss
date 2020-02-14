@@ -1,0 +1,23 @@
+.root, .root-container {
+    height: 100%;
+}
+
+.root-container {
+    display: flex;
+}
+
+.root.side-bar { 
+    flex: 0 0 auto;
+    @include small {    
+        width: auto;
+    }
+    @include medium {
+        width: 270px;
+    }
+    @include extra-small {
+        width: auto;
+    }
+}
+.main-content {
+    flex: 1 0 auto;
+}
