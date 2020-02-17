@@ -1,7 +1,17 @@
 @import 'utilities/variables';
 @import 'utilities/mixins';
 
+@import 'components/modal';
+
 @import 'layout/header';
 @import 'layout/sidebar';
 
 @import 'pages/home';
+@import 'pages/customer';
+
+*:focus {
+    outline: none;
+}
+ul {
+    list-style:none;
+}

@@ -6,18 +6,11 @@
     display: flex;
 }
 
-.root.side-bar { 
+.root-side-bar { 
     flex: 0 0 auto;
-    @include small {    
-        width: auto;
-    }
-    @include medium {
-        width: 270px;
-    }
-    @include extra-small {
-        width: auto;
-    }
+
 }
 .main-content {
     flex: 1 0 auto;
+    background-color: $main-background-color;
 }

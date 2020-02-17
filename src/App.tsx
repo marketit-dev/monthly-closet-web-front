@@ -10,23 +10,63 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import routes from './router';
 import './styles/main.scss';
 
-class App extends Component {
+type Props = {};
+
+type State = {
+    isOpen: boolean;
+};
+
+class App extends Component<Props, State> {
+    constructor(Props: Readonly<Props>) {
+        super(Props);
+        this.state = { isOpen: true };
+    }
+
+    toggleOpen = () => {
+        this.setState(state => ({
+            isOpen: !state.isOpen,
+        }));
+    };
+
     render() {
+        const { isOpen } = this.state;
         return (
             <div className="root-container">
                 <Router>
-                    <div className="side-bar root">
-                        <SideBar routes={routes} />
+                    <div className="root-side-bar root">
+                        <SideBar isOpen={isOpen} routes={routes} />
                     </div>
                     <div className="main-content">
-                        <Header />
+                        <Header toggleOpen={this.toggleOpen} />
                         <Switch>
-                            {routes.map(prop => {
+                            {routes.map(route => {
+                                const elements = [];
+                                route.subRoutes.map(subRoute => {
+                                    const component = Loadable({
+                                        loader: subRoute.component,
+                                        loading: Loading,
+                                    });
+                                    elements.push(
+                                        <Route
+                                            path={subRoute.layout + subRoute.path}
+                                            component={component}
+                                            key={subRoute.layout + subRoute.path}
+                                        />,
+                                    );
+                                    return null;
+                                });
                                 const component = Loadable({
-                                    loader: () => import(prop.component),
+                                    loader: route.component,
                                     loading: Loading,
                                 });
-                                return <Route path={prop.layout + prop.path} component={component} key={prop.path} />;
+                                elements.push(
+                                    <Route
+                                        path={route.layout + route.path}
+                                        component={component}
+                                        key={route.layout + route.path}
+                                    />,
+                                );
+                                return <Switch key={route.layout + route.path}>{elements}</Switch>;
                             })}
                             <Route component={NotFound} />
                         </Switch>

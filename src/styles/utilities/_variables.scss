@@ -31,12 +31,12 @@ $text-color: rgb(34, 34, 34) !default;
 
 /// Main brand color
 /// @type Color
-$brand-color: rgb(229, 0, 80) !default;
+$alarm-color: rgb(214, 78, 69) !default;
 
 /// Light grey
 /// @type Color
 $light-grey: rgb(215,216,217) !default;
-
+$light-grey-trans: rgba(215, 216, 217, 0.8) !default;
 /// Medium grey
 /// @type Color
 $mid-grey: rgba(81, 89, 87, 0.5) !default;
@@ -44,5 +44,10 @@ $mid-grey: rgba(81, 89, 87, 0.5) !default;
 /// Dark grey
 /// @type Color
 $dark-grey: rgb(53, 54, 68) !default;
+
+/// Main Background Color
+/// @type Color
+
+$main-background-color: rgb(245, 246, 249);
 
 $header-height: 60px;

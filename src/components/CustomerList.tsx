@@ -8,21 +8,23 @@ type CustomerListProps = {
 };
 
 const CustomerList = ({ customers }: CustomerListProps) => (
-    <Table striped bordered hover>
+    <Table striped bordered hover className="customer-list">
         <thead>
             <tr>
                 <th>#</th>
                 <th>이름</th>
                 <th>전화번호</th>
+                <th>cafe24아이디</th>
                 <th>나이</th>
             </tr>
         </thead>
         <tbody>
-            {customers.map((customer: TCustomer, index: number) => (
+            {customers.map((customer: TCustomer) => (
                 <tr key={customer.id}>
-                    <td>{index}</td>
+                    <td>{customer.id}</td>
                     <td>{customer.name}</td>
                     <td>{customer.phoneNumber}</td>
+                    <td>{customer.cafe24Id}</td>
                     <td>{customer.age}</td>
                 </tr>
             ))}

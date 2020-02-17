@@ -13,11 +13,10 @@ type SearchProps = {
 const Search = ({ title, onSearch, searchTypes, searchTypeKeys }: SearchProps) => {
     const [searchForm, setSearchForm] = useState<string>('');
     const [active, setActive] = useState<number>(0);
+
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        console.log(value);
         setSearchForm(value);
-        console.log(searchForm);
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
@@ -26,8 +25,12 @@ const Search = ({ title, onSearch, searchTypes, searchTypeKeys }: SearchProps) =
         setSearchForm(''); // 초기화
     };
 
+    const handleClick = () => {
+        onSearch({ [searchTypeKeys[active]]: searchForm });
+        setSearchForm(''); // 초기화
+    };
+
     const handleKeyPressSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        console.log('event', event.keyCode);
         if (event.keyCode === 13) {
             event.preventDefault();
             onSearch({ [searchTypeKeys[active]]: searchForm });
@@ -38,10 +41,13 @@ const Search = ({ title, onSearch, searchTypes, searchTypeKeys }: SearchProps) =
     function onClickSelector(index: number) {
         setActive(index);
     }
+
     return (
         <InputGroup className="mb-3">
             <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-default">{title}</InputGroup.Text>
+                <InputGroup.Text onClick={handleClick} id="inputGroup-sizing-default">
+                    {title}
+                </InputGroup.Text>
             </InputGroup.Prepend>
             <DropdownButton
                 as={InputGroup.Prepend}
@@ -58,8 +64,9 @@ const Search = ({ title, onSearch, searchTypes, searchTypeKeys }: SearchProps) =
             <FormControl
                 aria-describedby="basic-addon1"
                 onChange={onChange}
-                onKeyUp={handleKeyPressSubmit}
+                value={searchForm}
                 onSubmit={handleSubmit}
+                onKeyDown={handleKeyPressSubmit}
             />
         </InputGroup>
     );

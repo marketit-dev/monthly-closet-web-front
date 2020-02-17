@@ -1,0 +1,23 @@
+.customers-view {
+    padding: 10px;
+    .customers-container {
+        background-color: rgb(255, 255, 255);
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid $mid-grey;
+        overflow: auto;
+    }
+    .row {
+        margin: 0px;
+    }
+    .col {
+        margin: 0px;
+        padding: 0px;
+    }
+    .add-customer {
+        float: right;
+    }
+    .total-customer-num {
+        font-size: 20px;
+    }
+}

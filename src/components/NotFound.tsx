@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 
-function notFound() {
+function NotFound() {
     return (
         <div className="App-container">
             <Helmet>
@@ -13,4 +13,4 @@ function notFound() {
     );
 }
 
-export default notFound;
+export default NotFound;
