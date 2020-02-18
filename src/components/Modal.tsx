@@ -18,7 +18,12 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
         if (a.includes('files')) return { ...ac, [a]: [] };
         return { ...ac, [a]: '' };
     }, {});
+    const inputFileObject = inputTypeKeys.reduce((ac, a) => {
+        if (a.includes('files')) return { ...ac, [a]: [] };
+        return ac;
+    }, {});
     const [inputFormat, setInputFormat] = useState(inputObject);
+    const [fileFormat, setFileFormat] = useState(inputFileObject);
 
     const handleClose = () => setShow(false);
     const handleOpen = () => setShow(true);
@@ -50,6 +55,14 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                 [inputTypeKey]: spliceObject,
             };
         });
+        setFileFormat((prevInputFormat: {}) => {
+            const spliceObject = getObjectByKey(prevInputFormat, inputTypeKey);
+            spliceObject.splice(number, 1);
+            return {
+                ...prevInputFormat,
+                [inputTypeKey]: spliceObject,
+            };
+        });
     };
 
     const handleChangeImage = (e: { target: { name: string; files: FileList | null; value: any } }) => {
@@ -64,13 +77,22 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
             const fileReader = new FileReader();
             fileReader.onload = event => {
                 if (event.target) {
-                    setInputFormat((prevInputFormat: {}) => {
-                        if (!getObjectByKey(prevInputFormat, name).includes(event.target!.result))
+                    setFileFormat((prevFileFormat: {}) => {
+                        if (!getObjectByKey(prevFileFormat, name).includes(event.target!.result)) {
+                            setInputFormat((prevInputFormat: {}) => {
+                                if (!getObjectByKey(prevInputFormat, name).includes(files[index]))
+                                    return {
+                                        ...prevInputFormat,
+                                        [name]: [...getObjectByKey(prevInputFormat, name), files[index]],
+                                    };
+                                return prevInputFormat;
+                            });
                             return {
-                                ...prevInputFormat,
-                                [name]: [...getObjectByKey(prevInputFormat, name), event.target!.result],
+                                ...prevFileFormat,
+                                [name]: [...getObjectByKey(prevFileFormat, name), event.target!.result],
                             };
-                        return prevInputFormat;
+                        }
+                        return prevFileFormat;
                     });
                 }
             };
@@ -96,7 +118,8 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                         {inputTypes.map((inputType, index) => {
                             const inputTypeKey = inputTypeKeys[index];
                             const input = getObjectByKey(inputFormat, inputTypeKey);
-                            if (inputTypeKey.includes('files'))
+                            if (inputTypeKey.includes('files')) {
+                                const files = getObjectByKey(fileFormat, inputTypeKey);
                                 return (
                                     <div className="text-field" key={inputType}>
                                         <label
@@ -117,7 +140,7 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                                             className="d-flex flex-row justify-content-start
 "
                                         >
-                                            {input.map((file: string, imageIndex: number) => {
+                                            {files.map((file: string, imageIndex: number) => {
                                                 return (
                                                     <li key={file}>
                                                         <Avatar alt={inputType} src={file} />
@@ -134,6 +157,7 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                                         </ul>
                                     </div>
                                 );
+                            }
                             return (
                                 <TextField
                                     key={inputType}
