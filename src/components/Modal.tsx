@@ -31,6 +31,7 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
     const handleSubmit = () => {
         submit(inputFormat);
         setInputFormat(inputObject);
+        setFileFormat(inputObject);
         setShow(false);
     };
 

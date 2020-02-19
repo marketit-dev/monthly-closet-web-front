@@ -76,6 +76,7 @@ export default class CustomerStore {
             .catch(e => console.log(e));
     };
 
+    @action
     getCustomer = (id: number) => {
         return request(`customers/${id}`, 'get')
             .then(res => {
