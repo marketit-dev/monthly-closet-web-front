@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 import { ParsedUrlQueryInput } from 'querystring';
 import request from '../utils/request';
+import { checkFile, getObjectByKey } from '../utils/base_utils';
 
 export type TCustomer = {
     id: string;
@@ -55,17 +56,19 @@ export default class CustomerStore {
 
     @observable totalCustomerNum = 0;
 
-    getObjectByKey = (object: { [x: string]: any }, key: string | number) => object[key];
-
     @action
     addCustomer = (customer: TCustomer) => {
         const formData = new FormData();
         const keys = Object.keys(customer);
         keys.forEach(key => {
-            formData.append(key, this.getObjectByKey(customer, key));
+            if (checkFile(key)) {
+                for (let x = 0; x < getObjectByKey(customer, key).length; x++) {
+                    formData.append(key, getObjectByKey(customer, key)[x]);
+                }
+            } else formData.append(key, getObjectByKey(customer, key));
         });
         return request('customers', 'post', {}, formData, {
-            header: {
+            headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
@@ -96,6 +99,7 @@ export default class CustomerStore {
             .catch(e => console.log(e));
     };
 
+    @action
     searchCustomer = (searchQuery: ParsedUrlQueryInput) => {
         this.query = searchQuery;
         this.query.offset = 0;

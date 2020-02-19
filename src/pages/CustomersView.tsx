@@ -40,7 +40,6 @@ class CustomersView extends Component<CustomViewProps, {}> {
     }
 
     render() {
-        console.log('render');
         const {
             customers,
             totalCustomerNum,

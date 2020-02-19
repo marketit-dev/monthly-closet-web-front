@@ -5,7 +5,9 @@ export const goHistory = (path: string) => {
     history.push(path);
 };
 
-export const goHistory2 = (path: string) => {
-    const history = useHistory();
-    history.push(path);
+export const checkFile = (name: string) => {
+    if (name.includes('file') || name.includes('images')) return true;
+    return false;
 };
+
+export const getObjectByKey = (object: { [x: string]: any }, key: string | number) => object[key];

@@ -31,7 +31,7 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
     const handleSubmit = () => {
         submit(inputFormat);
         setInputFormat(inputObject);
-        setFileFormat(inputObject);
+        setFileFormat(inputFileObject);
         setShow(false);
     };
 
@@ -41,8 +41,8 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
 
     const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { value, name } = event.target;
-        setInputFormat(preInput => ({
-            ...preInput,
+        setInputFormat(prevInput => ({
+            ...prevInput,
             [name]: value,
         }));
     };
