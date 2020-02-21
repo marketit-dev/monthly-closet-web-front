@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { ParsedUrlQueryInput } from 'querystring';
 import request from '../utils/request';
 import { checkFile, getObjectByKey } from '../utils/base_utils';
@@ -39,10 +39,10 @@ export default class CustomerStore {
 
     @observable inputTypeKeys = ['name', 'phone', 'cafe24_id', 'files'];
 
-    @observable customers: TCustomer[] = observable([
+    @observable customers: TCustomer[] = [
         { id: '1', name: '승일', phoneNumber: '01096970444' },
         { id: '2', name: '태헌', phoneNumber: '01011111111' },
-    ]);
+    ];
 
     @observable customer: TCustomer = {
         id: '',
@@ -94,6 +94,8 @@ export default class CustomerStore {
         return request('customers', 'get', this.query)
             .then(res => {
                 this.customers = res.data.customers;
+                console.log(this.customers);
+
                 this.totalCustomerNum = res.data.totalCustomerNum;
             })
             .catch(e => console.log(e));
@@ -120,8 +122,7 @@ export default class CustomerStore {
         });
     };
 
-    // @computed get totalCustomerNum() {
-    //     // return this.divider;
-    //     return this.customers.length;
-    // }
+    @computed get totalPage() {
+        return Math.ceil(this.totalCustomerNum / this.limit);
+    }
 }

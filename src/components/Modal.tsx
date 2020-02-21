@@ -1,9 +1,20 @@
 import React, { useState, ChangeEvent } from 'react';
-import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { Button, TextField, Modal, InputLabel } from '@material-ui/core';
+
 import Avatar from '@material-ui/core/Avatar';
 import '../styles/main.scss';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
 
 type CustomModalProps = {
     submit: (args0: any) => void;
@@ -12,6 +23,8 @@ type CustomModalProps = {
     inputTypes: Array<string>;
 };
 const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalProps) => {
+    const classes = useStyles();
+    // getModalStyle is not a pure function, we roll the style only on the first render
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState('select profile');
     const inputObject = inputTypeKeys.reduce((ac, a) => {
@@ -112,10 +125,9 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                 open={show}
                 onClose={handleClose}
                 closeAfterTransition
-                className="modal-container"
             >
-                <div>
-                    <form noValidate autoComplete="off" className="d-flex flex-column" style={{ color: 'white' }}>
+                <div className={`modal-container ${classes.paper}`}>
+                    <form noValidate autoComplete="off" className="d-flex flex-column">
                         {inputTypes.map((inputType, index) => {
                             const inputTypeKey = inputTypeKeys[index];
                             const input = getObjectByKey(inputFormat, inputTypeKey);
@@ -123,12 +135,12 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                                 const files = getObjectByKey(fileFormat, inputTypeKey);
                                 return (
                                     <div className="text-field" key={inputType}>
-                                        <label
+                                        <InputLabel
                                             htmlFor={inputType}
                                             className="km-button km-button--primary km-btn-file-label"
                                         >
                                             <span>{inputType}</span>
-                                        </label>
+                                        </InputLabel>
                                         <input
                                             id={inputType}
                                             type="file"
@@ -162,7 +174,6 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                             return (
                                 <TextField
                                     key={inputType}
-                                    id="standard-secondary"
                                     label={inputType}
                                     name={inputTypeKeys[index]}
                                     onChange={onChange}
@@ -172,7 +183,7 @@ const CustomModal = ({ submit, title, inputTypeKeys, inputTypes }: CustomModalPr
                             );
                         })}
                     </form>
-                    <Button variant="outlined" color="secondary" onClick={handleSubmit}>
+                    <Button variant="outlined" color="primary" onClick={handleSubmit}>
                         제출하기
                     </Button>
                 </div>

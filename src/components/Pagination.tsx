@@ -1,29 +1,26 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Pagination } from 'react-bootstrap';
+import Pagination from '@material-ui/lab/Pagination';
+// import { PaginationItem } from '@material-ui/lab';
 
 type PaginationProps = {
-    totalNum: number;
+    totalPage: number;
     onActive: (arg0: number) => void;
-    limit?: number;
 };
 
-const Paginations = ({ totalNum, onActive, limit = 10 }: PaginationProps) => {
-    let active = 1;
-    const items = [];
-
+const Paginations = ({ totalPage, onActive }: PaginationProps) => {
     function onClickPage(number: number) {
         onActive(number - 1);
-        active = number;
     }
 
-    for (let number = 1; number <= Math.ceil(totalNum / limit); number++) {
-        items.push(
-            <Pagination.Item key={number} active={number === active} onClick={onClickPage(number)}>
-                {number}
-            </Pagination.Item>,
-        );
-    }
-    return <Pagination>{items}</Pagination>;
+    return (
+        <Pagination
+            count={totalPage}
+            variant="outlined"
+            shape="rounded"
+            color="primary"
+            onChange={(_: any, number: number) => onClickPage(number)}
+        />
+    );
 };
 export default observer(Paginations);

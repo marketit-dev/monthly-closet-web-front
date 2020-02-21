@@ -1,11 +1,6 @@
 .modal-container {
-    position: absolute;
-    width: 400px;
-    background-color: rgb(66, 66, 66);
-    color: $light-grey;
-    overflow: hidden;
     @extend %boxShadowModal;
-    padding: 20px;
+    width: 400px;
     left: 50% !important;
     top: 50% !important;
     transform: translate(-50%, -50%);
@@ -34,22 +29,8 @@
 
         }
     }
-    .MuiInputBase-input {
-        color: $light-grey;
-    }
-    .MuiInput-underline:before {
-        border-color:$light-grey-trans
-    }
-    .MuiFormLabel-root {
-        color: $light-grey-trans;
-    }
-    .MuuInputBase-root {
-        color: blue;
-    }
 }
-.modal-view {
-    background-color: none;
-}
+
 .modal-button {
     float: right;
 }

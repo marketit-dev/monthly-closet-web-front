@@ -2,6 +2,9 @@
 import React, { Component } from 'react';
 import Loadable from 'react-loadable';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import SideBar from './components/SideBar';
@@ -15,6 +18,11 @@ type Props = {};
 type State = {
     isOpen: boolean;
 };
+const theme = createMuiTheme({
+    palette: {
+        type: 'light',
+    },
+});
 
 class App extends Component<Props, State> {
     constructor(Props: Readonly<Props>) {
@@ -29,50 +37,54 @@ class App extends Component<Props, State> {
     };
 
     render() {
+        console.log(theme);
         const { isOpen } = this.state;
         return (
-            <div className="root-container">
-                <Router>
-                    <div className="root-side-bar root">
-                        <SideBar isOpen={isOpen} routes={routes} />
-                    </div>
-                    <div className="main-content">
-                        <Header toggleOpen={this.toggleOpen} />
-                        <Switch>
-                            {routes.map(route => {
-                                const elements = [];
-                                route.subRoutes.map(subRoute => {
+            <MuiThemeProvider theme={theme}>
+                <CssBaseline />
+                <div className="root-container">
+                    <Router>
+                        <div className="root-side-bar root">
+                            <SideBar isOpen={isOpen} routes={routes} />
+                        </div>
+                        <div className="main-content">
+                            <Header toggleOpen={this.toggleOpen} />
+                            <Switch>
+                                {routes.map(route => {
+                                    const elements = [];
+                                    route.subRoutes.map(subRoute => {
+                                        const component = Loadable({
+                                            loader: subRoute.component,
+                                            loading: Loading,
+                                        });
+                                        elements.push(
+                                            <Route
+                                                path={subRoute.layout + subRoute.path}
+                                                component={component}
+                                                key={subRoute.layout + subRoute.path}
+                                            />,
+                                        );
+                                        return null;
+                                    });
                                     const component = Loadable({
-                                        loader: subRoute.component,
+                                        loader: route.component,
                                         loading: Loading,
                                     });
                                     elements.push(
                                         <Route
-                                            path={subRoute.layout + subRoute.path}
+                                            path={route.layout + route.path}
                                             component={component}
-                                            key={subRoute.layout + subRoute.path}
+                                            key={route.layout + route.path}
                                         />,
                                     );
-                                    return null;
-                                });
-                                const component = Loadable({
-                                    loader: route.component,
-                                    loading: Loading,
-                                });
-                                elements.push(
-                                    <Route
-                                        path={route.layout + route.path}
-                                        component={component}
-                                        key={route.layout + route.path}
-                                    />,
-                                );
-                                return <Switch key={route.layout + route.path}>{elements}</Switch>;
-                            })}
-                            <Route component={NotFound} />
-                        </Switch>
-                    </div>
-                </Router>
-            </div>
+                                    return <Switch key={route.layout + route.path}>{elements}</Switch>;
+                                })}
+                                <Route component={NotFound} />
+                            </Switch>
+                        </div>
+                    </Router>
+                </div>
+            </MuiThemeProvider>
         );
     }
 }

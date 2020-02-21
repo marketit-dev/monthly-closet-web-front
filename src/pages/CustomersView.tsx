@@ -10,6 +10,7 @@ import { TCustomer, TReloadCustomer, TSearchCustomer, TAddCustomer } from '../st
 type CustomViewProps = {
     customers: Array<TCustomer>;
     totalCustomerNum: number;
+    totalPage: number;
     reloadCustomer: TReloadCustomer;
     searchCustomer: TSearchCustomer;
     limit: number;
@@ -23,6 +24,7 @@ type CustomViewProps = {
 @inject(({ customerStore }) => ({
     customers: customerStore.customers,
     totalCustomerNum: customerStore.totalCustomerNum,
+    totalPage: customerStore.totalPage,
     reloadCustomer: customerStore.reloadCustomer,
     divider: customerStore.divider,
     searchCustomer: customerStore.searchCustomer,
@@ -43,9 +45,9 @@ class CustomersView extends Component<CustomViewProps, {}> {
         const {
             customers,
             totalCustomerNum,
+            totalPage,
             searchCustomer,
             reloadCustomer,
-            limit,
             searchTypes,
             searchTypeKeys,
             addCustomer,
@@ -87,7 +89,7 @@ class CustomersView extends Component<CustomViewProps, {}> {
                             총 검색 갯수:
                             {totalCustomerNum}
                         </div>
-                        <Pagination totalNum={totalCustomerNum} limit={limit} onActive={reloadCustomer} />
+                        <Pagination totalPage={totalPage} onActive={reloadCustomer} />
                     </Row>
                 </Container>
             </div>
